@@ -64,6 +64,9 @@ resource "aws_elasticache_replication_group" "default" {
   # https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/AutoFailover.html
   automatic_failover_enabled = var.automatic_failover_enabled
 
+  # Assume that if failover is enabled, we want to be cross-az
+  az_mode = var.automatic_failover_enabled ? "cross-az" : "single-az"
+
   # Redis at-rest encryption is an optional feature to increase data security by encrypting on-disk data during sync
   # and backup or snapshot operations. Because there is some processing needed to encrypt and decrypt the data,
   # enabling at-rest encryption can have some performance impact during these operations.
